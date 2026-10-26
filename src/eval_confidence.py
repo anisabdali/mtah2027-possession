@@ -1,7 +1,7 @@
 """Mesure precision/couverture de la prediction geometrique sur DFL."""
 
 import numpy as np
-from inspect_open import load
+from inspect_open import load, dist_m
 
 
 def ground_name(team):
@@ -39,7 +39,7 @@ def main():
             if team not in distances or pos is None:
                 continue
 
-            d = np.hypot(pos.x - ball.x, pos.y - ball.y)
+            d = dist_m(pos, ball)
             if np.isfinite(d):
                 distances[team].append(d)
 

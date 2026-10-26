@@ -3,7 +3,7 @@
 Usage : python src/eval_cross_match.py
 """
 import numpy as np
-from inspect_open import load
+from inspect_open import load, dist_m
 from eval_learned import (
     extract_data,
     fit_logistic,

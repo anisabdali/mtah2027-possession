@@ -1,6 +1,6 @@
 
 """Inspecter les coordonnées et les identifiants des joueurs."""
-from inspect_open import load
+from inspect_open import load, dist_m
 
 ds = load(30000)
 f = ds.frames[0]

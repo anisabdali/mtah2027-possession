@@ -15,6 +15,12 @@ except ModuleNotFoundError:
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EXT = os.path.join(ROOT, "data", "external")
+PITCH_L, PITCH_W = 105.0, 68.0   # metres, cf. ds.metadata.pitch_dimensions
+
+
+def dist_m(a, b):
+    """Distance en metres entre deux points aux coordonnees normalisees (0-1)."""
+    return float(np.hypot((a.x - b.x) * PITCH_L, (a.y - b.y) * PITCH_W))
 
 
 

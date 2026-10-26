@@ -5,7 +5,7 @@ Evaluation : 30 % a la fin, jamais vus pendant l'entrainement.
 Usage : python src/eval_learned.py
 """
 import numpy as np
-from inspect_open import load
+from inspect_open import load, dist_m
 
 
 def ground_name(team):
@@ -40,7 +40,7 @@ def extract_data(ds):
             if team not in distances or pos is None:
                 continue
 
-            d = np.hypot(pos.x - ball.x, pos.y - ball.y)
+            d = dist_m(pos, ball)
             if np.isfinite(d):
                 distances[team].append(float(d))
 
@@ -54,12 +54,12 @@ def extract_data(ds):
         features = [
             dh[0], da[0], dh[0] - da[0], abs(dh[0] - da[0]),
             min(dh[0], da[0]),
-            dh[1] if len(dh) > 1 else 1.0,
-            da[1] if len(da) > 1 else 1.0,
+            dh[1] if len(dh) > 1 else 100.0,
+            da[1] if len(da) > 1 else 100.0,
         ]
 
         # Combien de joueurs de chaque equipe sont proches du ballon ?
-        for threshold in (0.01, 0.02, 0.04, 0.08):
+        for threshold in (1.0, 2.0, 4.0, 8.0):
             features.append(sum(d <= threshold for d in distances["home"]))
             features.append(sum(d <= threshold for d in distances["away"]))
 
