@@ -62,7 +62,7 @@ def main():
     if mode == "sweep":
         print("{:>4} {:>5} {:>7} {:>9} {:>9} {:>8} {:>7}".format(
             "k", "ks", "poss.", "moy (s)", "mediane", "p10 (s)", "% H"))
-        for k, ks in [(12, 0), (12, 4), (12, 8), (12, 12), (12, 16), (6, 8), (6, 12), (4, 12), (4, 16)]:
+        for k, ks in [(12, 12), (25, 12), (25, 16), (25, 24), (40, 24), (40, 32)]:
             paths = decode(e_track, e_shape, e_tag, k, ks, blocks)
             d = stats(paths)
             home = sum(int((p == 0).sum()) for *_, p in paths)
