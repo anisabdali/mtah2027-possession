@@ -3,6 +3,7 @@ Detecteur entraine sur les DEUX matchs DFL degrades, applique au match du hackat
   python src/predict_v5.py diag
   python src/predict_v5.py write <k> <ks>"""
 import os
+import json
 import sys
 import warnings
 
@@ -49,10 +50,20 @@ def train_detector():
     return fit_logistic((X - mu) / sd, y), mu, sd
 
 
+MODEL = os.path.join(ROOT, "models", "dead_detector.json")
+
+
+def load_detector():
+    if os.path.exists(MODEL):
+        with open(MODEL) as handle:
+            d = json.load(handle)
+        return np.array(d["w"]), np.array(d["mu"]), np.array(d["sd"])
+    return train_detector()
+
 def dead_probability(ball, players):
     if os.path.exists(CACHE):
         return np.load(CACHE)
-    w, mu, sd = train_detector()
+    w, mu, sd = load_detector()
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         X = features2(ball, players)
